@@ -1,0 +1,109 @@
+# =====================
+# Stage 0 - Frontend build
+# =====================
+FROM node:20-alpine AS frontend
+
+WORKDIR /app
+
+# Copy package files dulu untuk cache
+COPY package.json package-lock.json ./
+
+RUN npm install
+
+# Copy semua file untuk build
+COPY . .
+
+RUN npm run build
+
+
+# =====================
+# Stage 1 - Vendor build
+# =====================
+FROM composer:2 AS vendor
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+
+# Install dependencies tanpa cek extension di stage build
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-scripts \
+    --prefer-dist \
+    --ignore-platform-req=ext-exif \
+    --ignore-platform-req=ext-gd
+
+COPY . .
+
+# Copy hasil build frontend dari stage frontend
+COPY --from=frontend /app/public/build ./public/build
+
+# Pastikan folder storage & cache path ada sebelum artisan
+RUN mkdir -p storage/app \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/testing \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
+# Jalankan cache Laravel
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
+
+# Bersihkan yang tidak perlu di production
+RUN rm -rf node_modules
+
+
+# =====================
+# Stage 2 - Production
+# =====================
+FROM php:8.4-fpm-alpine
+
+# Install PHP extensions + runtime dependencies + build tools
+RUN apk add --no-cache \
+    libjpeg-turbo \
+    libpng \
+    libwebp \
+    freetype \
+    libpq \
+    libzip \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    freetype-dev \
+    postgresql-dev \
+    libzip-dev \
+    autoconf \
+    g++ \
+    make \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo pdo_pgsql gd exif zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libwebp-dev \
+        freetype-dev \
+        postgresql-dev \
+        libzip-dev \
+        autoconf \
+        g++ \
+        make \
+    && rm -rf /var/cache/apk/* /tmp/pear
+
+WORKDIR /var/www/html
+
+# Copy hasil vendor stage
+COPY --from=vendor /app ./
+
+# Set permission
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
+EXPOSE 9000
+CMD ["php-fpm"]

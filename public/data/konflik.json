@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Palu Barat, Kota Palu",
+    "lat": -0.8961,
+    "lng": 119.8339,
+    "jumlah": 5,
+    "penanganan": "Mediasi oleh aparat kelurahan"
+  },
+  {
+    "id": 2,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Tatanga, Kota Palu",
+    "lat": -0.9135,
+    "lng": 119.8572,
+    "jumlah": 3,
+    "penanganan": "Ditangani Bawaslu dan Kesbangpol"
+  },
+  {
+    "id": 3,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Ulujadi, Kota Palu",
+    "lat": -0.9345,
+    "lng": 119.7960,
+    "jumlah": 7,
+    "penanganan": "Dialog antar tokoh masyarakat"
+  },
+  {
+    "id": 4,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Palu Selatan, Kota Palu",
+    "lat": -0.9501,
+    "lng": 119.8755,
+    "jumlah": 2,
+    "penanganan": "Dilaporkan ke KPU setempat"
+  },
+  {
+    "id": 5,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Palu Timur, Kota Palu",
+    "lat": -0.9074,
+    "lng": 119.8907,
+    "jumlah": 10,
+    "penanganan": "Difasilitasi FKUB"
+  },
+  {
+    "id": 6,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Palu Utara, Kota Palu",
+    "lat": -0.8505,
+    "lng": 119.8800,
+    "jumlah": 4,
+    "penanganan": "Pengawasan Bawaslu"
+  },
+  {
+    "id": 7,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Tawaeli, Kota Palu",
+    "lat": -0.7947,
+    "lng": 119.8720,
+    "jumlah": 6,
+    "penanganan": "Penyelesaian adat setempat"
+  },
+  {
+    "id": 8,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Dolo, Kabupaten Sigi",
+    "lat": -1.0499,
+    "lng": 119.9045,
+    "jumlah": 8,
+    "penanganan": "Mediasi tokoh masyarakat dan aparat"
+  },
+  {
+    "id": 9,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Marawola, Kabupaten Sigi",
+    "lat": -1.0167,
+    "lng": 119.9250,
+    "jumlah": 3,
+    "penanganan": "Ditangani Panwas Kecamatan"
+  },
+  {
+    "id": 10,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Sigi Biromaru, Kabupaten Sigi",
+    "lat": -0.9865,
+    "lng": 119.9620,
+    "jumlah": 12,
+    "penanganan": "Pendampingan oleh Kesbangpol"
+  },
+  {
+    "id": 11,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Dolo Selatan, Kabupaten Sigi",
+    "lat": -1.0970,
+    "lng": 119.9140,
+    "jumlah": 5,
+    "penanganan": "Difasilitasi KPU Kabupaten"
+  },
+  {
+    "id": 12,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Dolo Barat, Kabupaten Sigi",
+    "lat": -1.0800,
+    "lng": 119.8700,
+    "jumlah": 9,
+    "penanganan": "Mediasi oleh pemerintah desa"
+  },
+  {
+    "id": 13,
+    "jenis": "Konflik Politik",
+    "lokasi": "Kecamatan Kulawi, Kabupaten Sigi",
+    "lat": -1.2290,
+    "lng": 119.7450,
+    "jumlah": 2,
+    "penanganan": "Ditangani Panwaslu setempat"
+  },
+  {
+    "id": 14,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Lindu, Kabupaten Sigi",
+    "lat": -1.3570,
+    "lng": 119.8530,
+    "jumlah": 4,
+    "penanganan": "Dialog antar tokoh agama"
+  },
+  {
+    "id": 15,
+    "jenis": "Konflik Sosial",
+    "lokasi": "Kecamatan Pipikoro, Kabupaten Sigi",
+    "lat": -1.4790,
+    "lng": 119.7300,
+    "jumlah": 3,
+    "penanganan": "Penyelesaian melalui musyawarah adat"
+  }
+]
