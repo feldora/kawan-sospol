@@ -10,16 +10,29 @@ class PotensiKonflikInfolist
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(6)
             ->components([
-                TextEntry::make('nama_potensi'),
                 TextEntry::make('tanggal_potensi')
-                    ->date(),
-                TextEntry::make('desa_id'),
-                TextEntry::make('penanggung_jawab'),
-                TextEntry::make('created_at')
-                    ->dateTime(),
-                TextEntry::make('updated_at')
-                    ->dateTime(),
+                    ->date()
+                    ->columnSpan(6),
+                TextEntry::make('nama_potensi')
+                    ->columnSpan(6),
+                TextEntry::make('desa_id')
+                    ->columnSpan(6),
+                TextEntry::make('penanggung_jawab')
+                    ->columnSpan(6),
+
+                TextEntry::make('latar_belakang')
+                    ->label('Latar Belakang')
+                    ->columnSpan(6)
+                    ->html(),
+                // TextEntry::make('created_at')
+                //     ->dateTime()
+                //     ->columnSpan(6),
+                // TextEntry::make('updated_at')
+                //     ->dateTime()
+                //     ->columnSpan(6),
+
             ]);
     }
 }

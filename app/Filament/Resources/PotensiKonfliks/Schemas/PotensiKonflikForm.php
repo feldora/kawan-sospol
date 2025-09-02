@@ -53,7 +53,7 @@ class PotensiKonflikForm
                         $kecamatanId = $get('kecamatan_id');
                         if (!$kecamatanId) return [];
                         return \App\Models\Desa::where('kecamatan_id', $kecamatanId)
-                            ->plunk('nama', 'id');
+                            ->pluck('nama', 'id');
                     })
                     ->required()
                     ->columnSpan(2), // Menggunakan 1 kolom dari 3

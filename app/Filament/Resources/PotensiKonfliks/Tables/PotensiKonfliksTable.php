@@ -14,6 +14,7 @@ class PotensiKonfliksTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('tanggal_potensi', 'desc')
             ->columns([
                 TextColumn::make('nama_potensi')
                     ->searchable(),

@@ -17,6 +17,7 @@ class PotensiKonflik extends Model
         'kabupaten_id',
         'kecamatan_id',
         'desa_id',
+        'jenis',
         'penanggung_jawab',
         'latar_belakang',
     ];
