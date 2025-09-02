@@ -18,6 +18,7 @@ Route::post('/laporan', [App\Http\Controllers\LaporanController::class, 'store']
 
 
 Route::get('api/data/konflik', [App\Http\Controllers\api\DataController::class, 'konflik'])->name('api.data.konflik');
+Route::get('api/data/potensiKonflik', [App\Http\Controllers\api\DataController::class, 'potensiKonflik'])->name('api.data.potensiKonflik');
 Route::get('api/data/konflik-kabupaten', [App\Http\Controllers\api\DataController::class, 'konflikPerKabupaten'])->name('api.data.konflikPerKabupaten');
 Route::get('api/data/konflik-desa-detail/{desaId?}', [App\Http\Controllers\api\DataController::class, 'detailKonflikPerDesa'])->name('api.data.detailKonflikPerDesa');
 

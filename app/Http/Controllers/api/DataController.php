@@ -5,10 +5,52 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Konflik;
+use App\Models\PotensiKonflik;
 use Illuminate\Support\Facades\DB;
 
 class DataController extends Controller
 {
+
+    public function potensiKonflik()
+    {
+        // Ambil potensi konflik dengan relasi desa → kecamatan → kabupaten → geoFeature
+        $potensiList = PotensiKonflik::with([
+            'desa.kecamatan.kabupaten',
+            'desa.geoFeature'
+        ])->get();
+        // dd($potensiList->toArray());
+        $result = [];
+
+        foreach ($potensiList as $potensi) {
+            $desa = $potensi->desa;
+            if (!$desa || !$desa->geoFeature) {
+                continue;
+            }
+
+            $kab = $desa->kecamatan->kabupaten;
+            $desLabel = ($kab->nama == 'Kota Palu') ? 'Kelurahan' : 'Desa';
+
+            $result[] = [
+                'id'          => $potensi->id,
+                'nama_potensi'=> $potensi->nama_potensi,
+                'tanggal_potensi'     => $potensi->tanggal_potensi,
+                'desa_id'     => $desa->id,
+                'lokasi'      => "{$desLabel} {$desa->nama}, Kecamatan {$desa->kecamatan->nama}, Kabupaten {$kab->nama}",
+                'geojson'     => json_decode(DB::selectOne(
+                    "SELECT ST_AsGeoJSON(geom) as geo FROM geo_features WHERE id = ?",
+                    [$desa->geoFeature->id]
+                )->geo),
+                'latar_belakang'   => $potensi->latar_belakang,
+                'penanggung_jawab' => $potensi->penanggung_jawab,
+            ];
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $result,
+        ]);
+    }
+
     public function konflik()
     {
         // Ambil konflik dengan relasi lengkap
