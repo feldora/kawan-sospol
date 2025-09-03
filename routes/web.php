@@ -6,6 +6,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -22,7 +33,7 @@ Route::get('api/data/potensiKonflik', [App\Http\Controllers\api\DataController::
 Route::get('api/data/konflik-kabupaten', [App\Http\Controllers\api\DataController::class, 'konflikPerKabupaten'])->name('api.data.konflikPerKabupaten');
 Route::get('api/data/konflik-desa-detail/{desaId?}', [App\Http\Controllers\api\DataController::class, 'detailKonflikPerDesa'])->name('api.data.detailKonflikPerDesa');
 
-Route::get('api/kecamatan', [App\Http\Controllers\api\WilayahController::class, 'getKecamatan']);
-Route::get('api/desa', [App\Http\Controllers\api\WilayahController::class, 'getDesa']);
-Route::get('api/kabupaten', [App\Http\Controllers\api\WilayahController::class, 'getKabupaten']);
-Route::get('api/provinsi', [p\Http\Controllers\api\WilayahController::class, 'getProvinsi']);
+// Route::get('api/kecamatan', [App\Http\Controllers\api\WilayahController::class, 'getKecamatan']);
+// Route::get('api/desa', [App\Http\Controllers\api\WilayahController::class, 'getDesa']);
+// Route::get('api/kabupaten', [App\Http\Controllers\api\WilayahController::class, 'getKabupaten']);
+// Route::get('api/provinsi', [p\Http\Controllers\api\WilayahController::class, 'getProvinsi']);

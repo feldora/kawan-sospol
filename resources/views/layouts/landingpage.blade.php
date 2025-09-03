@@ -14,6 +14,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- Additional Styles -->
     @stack('styles')
@@ -33,6 +34,12 @@
                     <li><a href="{{ route('dashboard.index') }}"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
                     <li><a href="{{ route('peta-sebaran.index') }}"><i class="fas fa-map-marked-alt"></i> Peta Sebaran</a></li>
                     <li><a href="{{ route('lapor-kawan.create') }}"><i class="fas fa-bullhorn"></i> Lapor Kawan</a></li>
+
+                    @auth
+                        <li><a href="{{ route('filament.admin.pages.dashboard') }}" class="{{ request()->routeIs('lapor-kawan.*') ? 'active' : '' }}">
+                            <i class="fa fa-user" aria-hidden="true"></i> Admin
+                        </a></li>
+                    @endauth
                 </ul>
             </div>
             <a href="{{ route('dashboard.index') }}" class="btn btn-ghost text-xl">
@@ -52,6 +59,11 @@
                 <li><a href="{{ route('lapor-kawan.create') }}" class="{{ request()->routeIs('lapor-kawan.*') ? 'active' : '' }}">
                     <i class="fas fa-bullhorn"></i> Lapor Kawan
                 </a></li>
+                @auth
+                    <li><a href="{{ route('filament.admin.pages.dashboard') }}" class="{{ request()->routeIs('lapor-kawan.*') ? 'active' : '' }}">
+                        <i class="fa fa-user" aria-hidden="true"></i> Admin
+                    </a></li>
+                @endauth
             </ul>
         </div>
 
@@ -60,17 +72,55 @@
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
                     <div class="indicator">
                         <i class="fas fa-bell text-lg"></i>
-                        <span class="badge badge-xs badge-primary indicator-item"></span>
+                        <span class="badge badge-xs badge-primary indicator-item">
+                            @if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            @endif
+                        </span>
                     </div>
                 </div>
                 <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
                     <div class="card-body">
                         <span class="font-bold text-lg">Notifikasi</span>
-                        <span class="text-info">Tidak ada notifikasi baru</span>
+                        @if(auth()->check() && auth()->user()->unreadNotifications->count() > 0)
+                            <ul class="space-y-2">
+                                @foreach(auth()->user()->unreadNotifications as $notification)
+                                    <li class="text-sm">
+                                        <a href="{{ route('notifications.show', $notification->id) }}" class="text-info hover:text-blue-600">
+                                            {{ $notification->data['message'] ?? 'Ada notifikasi baru!' }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <span class="text-info">Tidak ada notifikasi baru</span>
+                        @endif
                     </div>
                 </div>
             </div>
+
+            @guest
+                <!-- Tampilkan link login atau informasi lain jika pengguna tidak terautentikasi -->
+                <a href="{{ route('login') }}" class="btn btn-ghost">Login</a>
+            @endguest
+
+            @auth
+                <!-- Tampilkan profil atau menu logout jika pengguna terautentikasi -->
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" class="btn btn-ghost btn-circle">
+                        <i class="fas fa-user-circle text-lg"></i>
+                    </div>
+                    <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="#">Profil</a></li>
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                    </ul>
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+            @endauth
         </div>
+
     </div>
 
     <!-- Header -->
