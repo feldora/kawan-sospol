@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             KabupatenSeeder::class,
             KecamatanSeeder::class,
             DesaSeeder::class,
+            JenisKonflikSeeder::class,
             ShapefileImportSeeder::class,
         ]);
         $this->call(KonflikSeeder::class);

@@ -40,4 +40,10 @@ class PotensiKonflik extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+
+    public function jenisKonflik()
+    {
+        return $this->belongsTo(JenisKonflik::class, 'jenis_konflik_id');
+    }
+
 }
