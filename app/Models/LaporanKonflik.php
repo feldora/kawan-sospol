@@ -19,4 +19,15 @@ class LaporanKonflik extends Model
     {
         return $this->belongsTo(Konflik::class, 'konflik_id', 'id');
     }
+
+    public function potensiKonflik()
+    {
+        return $this->belongsTo(PotensiKonflik::class, 'potensi_konflik_id');
+    }
+
+    public function desa()
+    {
+        return $this->belongsTo(Desa::class, 'desa_id');
+    }
+
 }

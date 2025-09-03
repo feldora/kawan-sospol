@@ -10,6 +10,7 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Post;
+use App\Models\JenisKonflik;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -37,6 +38,13 @@ class PotensiKonfliksTable
                     ->limit(50)
                     ->tooltip(fn ($record) => $record->nama_potensi)
                     ->wrap(),
+
+                TextColumn::make('jenisKonflik.nama')
+                    ->label('Jenis Konflik')
+                    ->badge()
+                    ->color('primary')
+                    ->placeholder('-')
+                    ->sortable(),
 
                 TextColumn::make('tanggal_potensi')
                     ->label('Tanggal')
@@ -102,6 +110,13 @@ class PotensiKonfliksTable
                     ->color('gray'),
             ])
             ->filters([
+                SelectFilter::make('jenis_konflik_id')
+                    ->label('Jenis Konflik')
+                    ->options(JenisKonflik::pluck('nama', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->multiple(),
+
                 SelectFilter::make('kabupaten')
                     ->label('Kabupaten/Kota')
                     ->relationship('desa.kecamatan.kabupaten', 'nama')
@@ -178,12 +193,6 @@ class PotensiKonfliksTable
                 ])
                     ->label('Aksi Massal'),
             ])
-            // ->headerActions([
-            //     CreateAction::make()
-            //         ->label('Tambah Potensi Konflik')
-            //         ->icon('heroicon-m-plus')
-            //         ->color('primary'),
-            // ])
             ->emptyStateHeading('Belum ada data potensi konflik')
             ->emptyStateDescription('Mulai dengan menambahkan potensi konflik pertama Anda.')
             ->emptyStateIcon('heroicon-o-exclamation-triangle')

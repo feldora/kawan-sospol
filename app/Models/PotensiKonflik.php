@@ -17,9 +17,14 @@ class PotensiKonflik extends Model
         'kabupaten_id',
         'kecamatan_id',
         'desa_id',
+        'jenis_konflik_id', // Tambahkan field ini
         'jenis',
         'penanggung_jawab',
         'latar_belakang',
+        'potensi_konflik',
+        'eskalasi',
+        'status_konflik',
+
     ];
 
     protected $casts = [
@@ -41,9 +46,16 @@ class PotensiKonflik extends Model
         return $this->belongsTo(Desa::class);
     }
 
-    public function jenisKonflik()
+    /**
+     * Relasi ke JenisKonflik
+     */
+    public function jenisKonflik(): BelongsTo
     {
         return $this->belongsTo(JenisKonflik::class, 'jenis_konflik_id');
+    }
+    public function laporanKonfliks()
+    {
+        return $this->hasMany(LaporanKonflik::class, 'potensi_konflik_id');
     }
 
 }

@@ -8,6 +8,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Components\Section;
+use App\Models\JenisKonflik;
 
 class PotensiKonflikForm
 {
@@ -36,11 +37,32 @@ class PotensiKonflikForm
                         ->displayFormat('d/m/Y')
                         ->columnSpan(3),
 
+                    Select::make('jenis_konflik_id')
+                        ->label('Jenis Konflik')
+                        ->options(JenisKonflik::pluck('nama', 'id'))
+                        ->required()
+                        ->searchable()
+                        ->placeholder('Pilih Jenis Konflik')
+                        ->prefixIcon('heroicon-o-tag')
+                        ->createOptionForm([
+                            TextInput::make('nama')
+                                ->label('Nama Jenis Konflik')
+                                ->required()
+                                ->maxLength(255),
+                            TextInput::make('deskripsi')
+                                ->label('Deskripsi')
+                                ->maxLength(500),
+                        ])
+                        ->createOptionUsing(function (array $data) {
+                            return JenisKonflik::create($data)->id;
+                        })
+                        ->columnSpan(3),
+
                     TextInput::make('penanggung_jawab')
                         ->label('Penanggung Jawab')
                         ->placeholder('Nama penanggung jawab...')
                         ->prefixIcon('heroicon-o-user')
-                        ->columnSpan(3),
+                        ->columnSpan(6),
 
                     Select::make('kabupaten_id')
                         ->label('Kabupaten/Kota')
@@ -91,24 +113,6 @@ class PotensiKonflikForm
                         ->disabled(fn (callable $get) => !$get('kecamatan_id'))
                         ->columnSpan(2),
 
-                    // Placeholder::make('location_preview')
-                    //     ->columnSpan(6)
-                    //     ->content(function (callable $get) {
-                    //         $kab = $get('kabupaten_id') ? \App\Models\Kabupaten::find($get('kabupaten_id')) : null;
-                    //         $kec = $get('kecamatan_id') ? \App\Models\Kecamatan::find($get('kecamatan_id')) : null;
-                    //         $des = $get('desa_id') ? \App\Models\Desa::find($get('desa_id')) : null;
-
-                    //         $parts = [];
-                    //         if ($kab) $parts[] = $kab->nama;
-                    //         if ($kec) $parts[] = 'Kecamatan ' . $kec->nama;
-                    //         if ($des) $parts[] = (($kab?->nama === 'Kota Palu') ? 'Kelurahan ' : 'Desa ') . $des->nama;
-
-                    //         return $parts
-                    //             ? '<div class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border">' .
-                    //               '<span class="text-sm text-gray-600">' . implode(', ', array_reverse($parts)) . '</span></div>'
-                    //             : '<div class="text-sm text-gray-400 italic">Lokasi akan muncul setelah Anda memilih wilayah</div>';
-                    //     }),
-
                     RichEditor::make('latar_belakang')
                         ->label('Latar Belakang')
                         ->placeholder('Jelaskan latar belakang terjadinya potensi konflik...')
@@ -120,11 +124,6 @@ class PotensiKonflikForm
                         ])
                         ->extraAttributes(['style' => 'min-height: 200px;'])
                         ->columnSpan(6),
-
-                    // Placeholder::make('help_text')
-                    //     ->columnSpan(6)
-                    //     ->content('<div class="bg-blue-50 border border-blue-200 rounded-lg p-4">Tips Pengisian...</div>')
-                    //     ->hidden(fn ($operation) => $operation === 'view'),
                 ]),
         ];
     }

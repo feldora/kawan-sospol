@@ -17,16 +17,24 @@ class PotensiKonflikInfolist
                 // Header Section with Key Information
                 Section::make('')
                     ->schema([
-                        Grid::make(3)
+                        Grid::make(4)
                             ->schema([
                                 TextEntry::make('nama_potensi')
                                     ->label('Nama Potensi Konflik')
-                                    ->columnSpan(3)
+                                    ->columnSpan(4)
                                     ->weight('bold')
                                     ->size('lg')
                                     ->color('primary')
                                     ->icon('heroicon-o-exclamation-triangle')
                                     ->copyable(),
+
+                                TextEntry::make('jenisKonflik.nama')
+                                    ->label('Jenis Konflik')
+                                    ->icon('heroicon-o-tag')
+                                    ->color('primary')
+                                    ->badge()
+                                    ->default('-')
+                                    ->columnSpan(1),
 
                                 TextEntry::make('tanggal_potensi')
                                     ->label('Tanggal Identifikasi')
@@ -54,6 +62,19 @@ class PotensiKonflikInfolist
                             ]),
                     ])
                     ->compact(),
+
+                // Jenis Konflik Detail (jika ada deskripsi)
+                Section::make('Detail Jenis Konflik')
+                    ->description('Informasi detail tentang jenis konflik')
+                    ->icon('heroicon-o-information-circle')
+                    ->collapsed(true)
+                    ->schema([
+                        TextEntry::make('jenisKonflik.deskripsi')
+                            ->label('Deskripsi Jenis Konflik')
+                            ->placeholder('Tidak ada deskripsi')
+                            ->columnSpanFull(),
+                    ])
+                    ->visible(fn ($record) => $record->jenisKonflik?->deskripsi),
 
                 // Location Information
                 Section::make('Informasi Lokasi')
