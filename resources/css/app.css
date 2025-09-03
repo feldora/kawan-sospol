@@ -38,3 +38,8 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.icon-sm {
+  @apply w-5 h-5 shrink-0 inline-flex text-[unset];
+}
+/* @import '@fortawesome/fontawesome-free/css/all.css'; */

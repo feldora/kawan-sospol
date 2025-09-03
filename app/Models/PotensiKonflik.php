@@ -53,7 +53,7 @@ class PotensiKonflik extends Model
     {
         return $this->belongsTo(JenisKonflik::class, 'jenis_konflik_id');
     }
-    public function laporanKonfliks()
+    public function laporanKonflik()
     {
         return $this->hasMany(LaporanKonflik::class, 'potensi_konflik_id');
     }

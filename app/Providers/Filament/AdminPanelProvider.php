@@ -7,6 +7,15 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages\Dashboard;
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Filament\Widgets\KonflikByLocationWidget;
+use App\Filament\Widgets\KonflikByTypeWidget;
+use App\Filament\Widgets\StatusProgressWidget;
+use App\Filament\Widgets\MonthlyTrendWidget;
+use App\Filament\Widgets\RecentActivitiesWidget;
+use App\Filament\Widgets\AlertSystemWidget;
+use App\Filament\Widgets\MapWidget;
+
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -48,8 +57,17 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                // AccountWidget::class,
+                // FilamentInfoWidget::class,
+                StatsOverviewWidget::class,
+                KonflikByLocationWidget::class,
+                KonflikByTypeWidget::class,
+                StatusProgressWidget::class,
+                MonthlyTrendWidget::class,
+                RecentActivitiesWidget::class,
+                AlertSystemWidget::class,
+                MapWidget::class,
+
             ])
             ->middleware([
                 EncryptCookies::class,
