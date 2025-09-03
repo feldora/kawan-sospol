@@ -45,4 +45,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // $user = User::find(1);
+    // $user->notify(new \App\Notifications\Notification); // Ganti dengan nama notifikasi Anda
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable');
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('read_at', null);
+    }
 }
